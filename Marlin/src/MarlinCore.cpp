@@ -283,6 +283,46 @@ bool wait_for_heatup = true;
     while (ui.button_pressed()) safe_delay(50);
   }
 
+//M2 custom implementation
+  void wait_for_timer_or_response(millis_t ms, const char* const message) {
+    TERN(ADVANCED_PAUSE_FEATURE, , UNUSED(true));
+    KEEPALIVE_STATE(PAUSED_FOR_USER);
+    uint8_t init = sizeof(uint8_t) * 4 + sizeof(char) * 2;
+    uint8_t tot = init + strlen(message);
+    uint8_t prev = 254;
+    wait_for_user = true;
+    ms += millis(); // expire time
+    char buffer[tot];
+    //duration_t(print_job_timer.duration()).toString(buffer);
+    while (wait_for_user && !ELAPSED(millis(), ms))
+    {
+      millis_t millisecs = ms - millis();
+      idle_no_sleep();
+
+      uint8_t s = MS_TO_SEC(millisecs) % 60;
+      uint8_t m = MS_TO_SEC(millisecs) / 60;
+
+      if (prev != s)
+      {
+        sprintf_P(buffer, PSTR("%02u:%02u "), m, s);
+        for (uint8_t i = init; i < tot; ++i)
+        {
+          buffer[i] = message[i - init];
+        }
+#if HAS_MARLINUI_MENU
+        ui.set_status(buffer, true);
+#elif ENABLED(EXTENSIBLE_UI)
+        ExtUI::onUserConfirmRequired(buffer); // Can this take an SRAM string??
+#else
+        SERIAL_ECHO_START();
+        SERIAL_ECHOLN(buffer);
+#endif
+        prev = s;
+      }
+    }
+    wait_for_user = false;
+  }
+
 #endif
 
 /**

@@ -176,6 +176,11 @@
   #define FAN1_PIN                  MOSFET_E_PIN
 #endif
 
+//for the part cooling fan!
+#ifndef FAN0_PIN
+#define FAN0_PIN MOSFET_F_PIN
+#endif
+
 //
 // Misc. Functions
 //

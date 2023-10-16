@@ -76,6 +76,7 @@
  *
  * M0   - Unconditional stop - Wait for user to press a button on the LCD (Only if ULTRA_LCD is enabled)
  * M1   -> M0
+ * M2   -> msg with timer, or user input to unlock
  * M3   - Turn ON Laser | Spindle (clockwise), set Power | Speed. (Requires SPINDLE_FEATURE or LASER_FEATURE)
  * M4   - Turn ON Laser | Spindle (counter-clockwise), set Power | Speed. (Requires SPINDLE_FEATURE or LASER_FEATURE)
  * M5   - Turn OFF Laser | Spindle. (Requires SPINDLE_FEATURE or LASER_FEATURE)
@@ -614,6 +615,7 @@ private:
 
   #if HAS_RESUME_CONTINUE
     static void M0_M1();
+	static void M2();
   #endif
 
   #if HAS_CUTTER

@@ -88,7 +88,7 @@ typedef bool (*statusResetFunc_t)();
 
 #if ANY(HAS_WIRED_LCD, DWIN_CREALITY_LCD_JYERSUI)
   #define LCD_WITH_BLINK 1
-  #define LCD_UPDATE_INTERVAL TERN(HAS_TOUCH_BUTTONS, 50, 100)
+  #define LCD_UPDATE_INTERVAL TERN(HAS_TOUCH_BUTTONS, 50, 100)//maybe 100 and 200 to avoid too much flichering in the lcd screen?!
 #endif
 
 #if HAS_MARLINUI_U8GLIB

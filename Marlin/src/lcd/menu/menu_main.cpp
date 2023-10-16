@@ -305,7 +305,7 @@ void menu_main() {
       }
       else {
         #if HAS_SD_DETECT
-          ACTION_ITEM(MSG_NO_MEDIA, nullptr);               // "No Media"
+          ACTION_ITEM(MSG_NO_MEDIA, card.mount);               // "No Media"
         #else
           #if ENABLED(MULTI_VOLUME)
             GCODES_ITEM(MSG_ATTACH_SD_MEDIA, F("M21S"));    // M21S Attach SD Card
@@ -421,8 +421,8 @@ void menu_main() {
       }
     }
     else {
-      #if HAS_SD_DETECT
-        ACTION_ITEM(MSG_NO_MEDIA, nullptr);               // "No Media"
+      #if HAS_SD_DETECT //due to bogus card detection system, if the media is in sometimes it doesn't get detected, we mount it forcibly if we click on the screen the "no media"
+        ACTION_ITEM(MSG_NO_MEDIA, card.mount);               // "No Media"
       #else
           #if ENABLED(MULTI_VOLUME)
             GCODES_ITEM(MSG_ATTACH_SD_MEDIA, F("M21S"));    // M21S Attach SD Card

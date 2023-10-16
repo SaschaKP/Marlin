@@ -212,7 +212,7 @@ void menu_move() {
   #endif
 
   // Move submenu for each axis
-  if (NONE(IS_KINEMATIC, NO_MOTION_BEFORE_HOMING) || all_axes_homed()) {
+  if (NONE(IS_KINEMATIC, NO_MOTION_BEFORE_HOMING) || all_axes_trusted()) {
     if (TERN1(DELTA, current_position.z <= delta_clip_start_height)) {
       #if HAS_X_AXIS
         SUBMENU_N(X_AXIS, MSG_MOVE_N, []{ _menu_move_distance(X_AXIS, []{ lcd_move_axis(X_AXIS); }); });
@@ -486,6 +486,7 @@ void menu_motion() {
   //
   // Level Bed
   //
+  
   #if ENABLED(AUTO_BED_LEVELING_UBL)
 
     SUBMENU(MSG_UBL_LEVEL_BED, _lcd_ubl_level_bed);

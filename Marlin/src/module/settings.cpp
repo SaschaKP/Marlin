@@ -3132,6 +3132,11 @@ void MarlinSettings::reset() {
     scara_home_offset.reset();
   #elif HAS_HOME_OFFSET
     home_offset.reset();
+//commented out code, it works better with the x_min and x_max size modified accordingly
+    /*float xtmp[EXTRUDERS] = HOTEND_OFFSET_X;
+    home_offset[0] = -(xtmp[EXTRUDERS - 1]);//specifically for mightyboard with more than one extruder.
+    float ytmp[EXTRUDERS] = HOTEND_OFFSET_Y;
+    home_offset[1] = -(ytmp[EXTRUDERS - 1]);*/
   #endif
 
   TERN_(HAS_HOTEND_OFFSET, reset_hotend_offsets());

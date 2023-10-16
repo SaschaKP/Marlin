@@ -378,7 +378,7 @@ void report_current_position_projected() {
       else
         return COORDINATE_OKAY(rx, X1_MIN_POS - fslop, X1_MAX_POS + fslop);
     #else
-      if (TERN0(HAS_X_AXIS, !COORDINATE_OKAY(rx, X_MIN_POS - fslop, X_MAX_POS + fslop))) return false;
+      if (TERN0(HAS_X_AXIS, !COORDINATE_OKAY(rx, X_MIN_POS_SAFE - fslop, X_MAX_POS + fslop))) return false;
       return true;
     #endif
   }
@@ -925,7 +925,7 @@ void restore_feedrate_and_scaling() {
 
     #else
 
-      soft_endstop.min[axis] = base_min_pos(axis);
+      soft_endstop.min[axis] = max(0.0f, base_min_pos(axis));
       soft_endstop.max[axis] = base_max_pos(axis);
 
     #endif
