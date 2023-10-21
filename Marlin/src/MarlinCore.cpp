@@ -285,15 +285,18 @@ bool wait_for_heatup = true;
 
 //M2 custom implementation
   void wait_for_timer_or_response(millis_t ms, const char* const message) {
-    TERN(ADVANCED_PAUSE_FEATURE, , UNUSED(true));
+    UNUSED(true);
     KEEPALIVE_STATE(PAUSED_FOR_USER);
-    uint8_t init = sizeof(uint8_t) * 4 + sizeof(char) * 2;
+    const uint8_t init = sizeof(uint8_t) * 3 + sizeof(char) * 2;
     uint8_t tot = init + strlen(message);
     uint8_t prev = 254;
     wait_for_user = true;
     ms += millis(); // expire time
     char buffer[tot];
     //duration_t(print_job_timer.duration()).toString(buffer);
+
+    // (probably the longest string would be at most 50 bytes)
+    // SRAM consumed = 1 + 1 + 50 + 12 = 64 bytes of sram // 12 == buffers for calculations of millis and s + m
     while (wait_for_user && !ELAPSED(millis(), ms))
     {
       millis_t millisecs = ms - millis();
@@ -304,7 +307,7 @@ bool wait_for_heatup = true;
 
       if (prev != s)
       {
-        sprintf_P(buffer, PSTR("%02u:%02u "), m, s);
+        sprintf_P(buffer, PSTR("%u:%02u "), m, s);
         for (uint8_t i = init; i < tot; ++i)
         {
           buffer[i] = message[i - init];

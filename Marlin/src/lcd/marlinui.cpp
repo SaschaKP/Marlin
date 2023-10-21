@@ -995,10 +995,10 @@ void MarlinUI::init() {
 
     if (ELAPSED(ms, next_lcd_update_ms) || TERN0(HAS_MARLINUI_U8GLIB, drawing_screen)) {
 
-      //if (!wait_for_user)
-        next_lcd_update_ms = ms + LCD_UPDATE_INTERVAL;
-      //else
-        //next_lcd_update_ms = ms + 50;//make update faster
+//      if (!wait_for_user)
+//        next_lcd_update_ms = ms + LCD_UPDATE_INTERVAL;
+//      else
+        next_lcd_update_ms = ms + 50;//make update faster
 
       #if HAS_TOUCH_BUTTONS
 

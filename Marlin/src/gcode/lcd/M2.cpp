@@ -57,7 +57,7 @@ void GcodeSuite::M2() {
 
   planner.synchronize();
      // Seconds to wait
-  if (ms > 5999000 || !parser.string_arg)//99 minutes and 59 seconds MAX, it's absurd as an amount, but it's still possible...over this value or without any text this command will directly abort.
+  if (ms > 599000 || !parser.string_arg)//9 minutes and 59 seconds MAX...over this value or without any text this command will directly abort.
   {
     return;
   }

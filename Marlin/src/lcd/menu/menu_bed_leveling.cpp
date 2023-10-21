@@ -278,11 +278,11 @@ void menu_bed_leveling() {
   // Mesh Bed Leveling Z-Offset
   //
   #if ENABLED(MESH_BED_LEVELING)
-    #if WITHIN(Z_PROBE_OFFSET_RANGE_MIN, -9, 9)
-      #define LCD_Z_OFFSET_TYPE float43    // Values from -9.000 to +9.000
-    #else
+    //#if WITHIN(Z_PROBE_OFFSET_RANGE_MIN, -9, 9)
+      //#define LCD_Z_OFFSET_TYPE float43    // Values from -9.000 to +9.000
+    //#else
       #define LCD_Z_OFFSET_TYPE float42_52 // Values from -99.99 to 99.99
-    #endif
+    //#endif
     EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_MESH_Z_OFFSET, &bedlevel.z_offset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
   #endif
 
