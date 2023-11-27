@@ -287,7 +287,7 @@ bool wait_for_heatup = true;
   void wait_for_timer_or_response(millis_t ms, const char* const message) {
     UNUSED(true);
     KEEPALIVE_STATE(PAUSED_FOR_USER);
-    const uint8_t init = sizeof(uint8_t) * 3 + sizeof(char) * 2;
+    const uint8_t init = sizeof(uint8_t) * 4 + sizeof(char) * 2;
     uint8_t tot = init + strlen(message);
     uint8_t prev = 254;
     wait_for_user = true;
@@ -307,22 +307,25 @@ bool wait_for_heatup = true;
 
       if (prev != s)
       {
-        sprintf_P(buffer, PSTR("%u:%02u "), m, s);
+        sprintf_P(buffer, PSTR("%02u:%02u "), m, s);
         for (uint8_t i = init; i < tot; ++i)
         {
           buffer[i] = message[i - init];
         }
-#if HAS_MARLINUI_MENU
+
+        ui.set_status_no_expire(buffer);
+/*#if HAS_MARLINUI_MENU
         ui.set_status(buffer, true);
 #elif ENABLED(EXTENSIBLE_UI)
         ExtUI::onUserConfirmRequired(buffer); // Can this take an SRAM string??
 #else
         SERIAL_ECHO_START();
         SERIAL_ECHOLN(buffer);
-#endif
+#endif*/
         prev = s;
       }
     }
+    ui.reset_status();
     wait_for_user = false;
   }
 

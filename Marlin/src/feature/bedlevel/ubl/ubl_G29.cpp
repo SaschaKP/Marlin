@@ -302,8 +302,9 @@ G29_parameters_t unified_bed_leveling::param;
 void unified_bed_leveling::G29() {
 
   bool probe_deployed = false;
-  if (G29_parse_parameters()) return; // Abort on parameter error
 
+  if (G29_parse_parameters()) return; // Abort on parameter error
+  
   const uint8_t p_val = parser.byteval('P');
   const bool may_move = p_val == 1 || p_val == 2 || p_val == 4 || parser.seen_test('J');
 
